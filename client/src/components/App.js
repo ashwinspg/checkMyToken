@@ -8,7 +8,7 @@ import Landing from './Landing';
 import Dashboard from './Dashboard';
 import HospitalForm from './hospitals/HospitalForm';
 import DoctorForm from './doctors/DoctorForm';
-import DoctorStatusForm from './doctorStatus/DoctorStatusForm';
+import DoctorStatus from './doctorStatus/DoctorStatus';
 
 class App extends Component {
 
@@ -29,7 +29,7 @@ class App extends Component {
                 <Switch>
                     <Route exact path="/hospital/doctors" component={Dashboard} />
                     <Route exact path="/hospital/doctors/new" component={DoctorForm} />
-                    <Route exact path="/hospital/doctors/:doctorId" component={DoctorStatusForm} />
+                    <Route exact path="/hospital/doctors/:doctorId" component={DoctorStatus} />
                     <Redirect to="/hospital/doctors" />
                 </Switch>
             );

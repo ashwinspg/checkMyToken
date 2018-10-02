@@ -18,7 +18,7 @@ module.exports = app => {
         });
 
         await doctor.save();
-console.log("asf");
+
         req.user.credits -= 1;
         const user = await req.user.save();
 
@@ -30,5 +30,12 @@ console.log("asf");
         const doctors = await Doctor.find({ _hospital:  hospital._id });
 
         res.send(doctors);
+    });
+
+    app.get('/api/hospital/doctors/:doctorId', requireLogin, async (req, res) => {
+        const doctorId = req.params.doctorId;
+        const doctor = await Doctor.findById(doctorId);
+
+        res.send(doctor);
     });
 };
