@@ -1,0 +1,8 @@
+@media only screen and (max-width: 600px){
+    .container {
+        width: 100%;
+    }
+}
+ul.header-links li{
+    margin: 0 10px;
+}

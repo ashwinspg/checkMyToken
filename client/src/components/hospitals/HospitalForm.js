@@ -1,19 +1,18 @@
-// SurveyForm shows a form for a user to add input
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import SurveyField from './SurveyField';
-import validateEmails from '../../utils/validateEmails';
 import formFields from './formFields';
+import HospitalFormField from './HospitalFormField';
+import * as actions from '../../actions';
 
-class SurveyForm extends Component{
+class HospitalForm extends Component{
     renderField(){
         return _.map(formFields, ({label, name}) => {
             return <Field 
                 key={name}
-                component={SurveyField}
+                component={HospitalFormField}
                 type="text"
                 label={label}
                 name={name}
@@ -25,14 +24,11 @@ class SurveyForm extends Component{
         return (
             <div>
                 <form 
-                    onSubmit = {this.props.handleSubmit(this.props.onSurveySubmit)}
+                    onSubmit = {this.props.handleSubmit((formValues) => {this.props.createHospital(formValues, this.props.history)})}
                 >
                     {this.renderField()}
-                    <Link to="/surveys" className="red btn-flat white-text">
-                        Cancel
-                    </Link>
                     <button type="submit" className="teal btn-flat right white-text">
-                        Next
+                        Submit
                         <i className="material-icons right">done</i>
                     </button>
                 </form>
@@ -44,8 +40,6 @@ class SurveyForm extends Component{
 function validate(values){
     const errors = {};
 
-    errors.recipients = validateEmails(values.recipients || '');
-
     _.each(formFields, ({ name }) => {
         if(!values[name]){
             errors[name] = 'You must provide a value';
@@ -55,8 +49,7 @@ function validate(values){
     return errors;
 }
 
-export default reduxForm({
+export default connect(null, actions)(reduxForm({
     validate,
-    form: 'surveyForm',
-    destroyOnUnmount: false
-})(SurveyForm);
+    form: 'hospitalForm'
+})(HospitalForm));
