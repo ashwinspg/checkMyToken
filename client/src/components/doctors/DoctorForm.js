@@ -6,9 +6,14 @@ import { connect } from 'react-redux';
 
 import formFields from './formFields';
 import DoctorFormField from './DoctorFormField';
+import Modal from '../UI/Modal/Modal';
 import * as actions from '../../actions';
 
 class DoctorForm extends Component{
+    state = {
+        showError: false
+    }
+
     renderField(){
         return _.map(formFields, ({label, name}) => {
             return <Field 
@@ -21,17 +26,30 @@ class DoctorForm extends Component{
         });
     }
 
+    closeModal(){
+        this.setState({
+            showError: false
+        });
+    }
+
     submitHandler(formValues){
         if(this.props.auth.credits > 0){
             return this.props.createDoctor(formValues, this.props.history)
         }
-        alert("You should need atleast one credit to add Doctor!");
-        return;
+        this.setState({
+            showError: true
+        });
     }
 
     render(){
         return (
             <div>
+                {this.state.showError ? 
+                    (<Modal show="true" showContainer="true" modalClosed={() => this.closeModal()}>
+                        <div>You should need atleast one credit to add Doctor!</div>
+                    </Modal>) :
+                    null
+                }
                 <form 
                     onSubmit = {this.props.handleSubmit((formValues) => {this.submitHandler(formValues)})}
                 >

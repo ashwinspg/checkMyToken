@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Loader = () => {
+const Spinner = () => {
     return (
-        <div className="center-align" style={{marginTop: '100px'}}>
+        <div>
             <div className="preloader-wrapper big active">
                 <div className="spinner-layer spinner-blue">
                     <div className="circle-clipper left">
@@ -49,4 +49,4 @@ const Loader = () => {
 }
 
 
-export default Loader;
+export default Spinner;

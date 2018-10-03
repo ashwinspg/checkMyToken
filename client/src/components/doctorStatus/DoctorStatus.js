@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Loader from '../loaders/Loader';
+import Spinner from '../UI/Spinner/Spinner';
+import Modal from '../UI/Modal/Modal';
 import * as actions from '../../actions';
 
 class DoctorStatus extends Component {
@@ -13,10 +14,20 @@ class DoctorStatus extends Component {
         this.props.doctorStatusReset();
     }
 
+    copyURL(){
+        console.log("af");
+        var copyText = document.getElementById("searchURL");
+        copyText.select();
+        document.execCommand("copy");
+    }
+
     renderContent() {
-        console.log("doctorStatus ",this.props);
         if(!this.props.doctorStatus.loaded){
-            return (<Loader />);
+            return (
+                <Modal show="true">
+                    <Spinner />
+                </Modal>
+            );
         }
         return (
             <div>
@@ -51,9 +62,18 @@ class DoctorStatus extends Component {
                         <p>
                             The following URL can be used by the patients to know about the status of the token:
                         </p>
-                        <p className="blue-text" style={{ overflow: 'scroll', marginTop: '15px' }}>
-                            { window.location.origin + "/search/" +this.props.match.params.doctorId }
-                        </p>
+                        <textarea
+                            id="searchURL"
+                            className="blue-text center-align"
+                            style={{ marginTop: '15px', border: '0px', outlineColor: 'transparent' }}
+                            readOnly={true}
+                            value={ window.location.origin + "/search/" +this.props.match.params.doctorId } 
+                        />
+                        <div className="card-action center">
+                            <button className="btn" onClick={() => this.copyURL()}>
+                                Copy above URL
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import Loader from '../loaders/Loader';
+import Spinner from '../UI/Spinner/Spinner';
+import Modal from '../UI/Modal/Modal';
 import * as actions from '../../actions';
 
 class DoctorList extends Component {
@@ -12,7 +13,11 @@ class DoctorList extends Component {
 
     renderContent(){
         if(!this.props.doctors.loaded){
-            return (<Loader />);
+            return (
+                <Modal show="true">
+                    <Spinner />
+                </Modal>
+            );
         }
         return this.props.doctors.data.map(doctor => {
             return (
