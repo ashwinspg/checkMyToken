@@ -1,3 +1,6 @@
+export const SHOW_LOADER = 'show_loader';
+export const HIDE_LOADER = 'hide_loader';
+
 export const FETCH_USER = 'fetch_user';
 
 export const FETCH_DOCTORS = 'fetch_doctors';

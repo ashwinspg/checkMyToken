@@ -2,29 +2,40 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import * as actions from '../actions';
+import M from 'materialize-css/dist/js/materialize.min.js';
 import Header from './Header';
 import Landing from './Landing';
 import Dashboard from './Dashboard';
 import HospitalForm from './hospitals/HospitalForm';
 import DoctorForm from './doctors/DoctorForm';
 import DoctorStatus from './doctorStatus/DoctorStatus';
+import * as actions from '../actions';
 
 class App extends Component {
+
+    componentWillMount(){
+        document.addEventListener('DOMContentLoaded', function() {
+            M.Sidenav.init(document.querySelectorAll('.sidenav'), {
+                edge: 'right',
+                closeOnClick: true,
+                draggable: true
+            });
+        });
+    }
 
     componentDidMount() {
         this.props.fetchUser();
     }
 
     routerConfiguration() {
-        if(this.props.auth && !this.props.auth.basicInfo){
+        if(this.props.auth.data && !this.props.auth.data.basicInfo){
             return (
                 <Switch>
                     <Route exact path="/hospital/new" component={HospitalForm} />
                     <Redirect to="/hospital/new" />
                 </Switch>
             );
-        }if(this.props.auth){
+        }if(this.props.auth.data){
             return (
                 <Switch>
                     <Route exact path="/hospital/doctors" component={Dashboard} />

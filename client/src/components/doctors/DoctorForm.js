@@ -4,16 +4,14 @@ import { reduxForm, Field } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import Modal from '../UI/Modal/Modal';
 import formFields from './formFields';
 import DoctorFormField from './DoctorFormField';
-import Modal from '../UI/Modal/Modal';
-import Spinner from '../UI/Spinner/Spinner';
 import * as actions from '../../actions';
 
 class DoctorForm extends Component{
     state = {
-        showError: false,
-        showSpinner: false
+        showError: false
     }
 
     renderField(){
@@ -29,16 +27,11 @@ class DoctorForm extends Component{
     }
 
     submitHandler(formValues){
-        if(this.props.auth.credits > 0){
-            this.setState({
-                ...this.state,
-                showSpinner: true
-            });
+        if(this.props.auth.data.credits > 0){
             return this.props.createDoctor(formValues, this.props.history);
         }
         this.setState({ 
             ...this.state,
-            showSpinner: false,
             showError: true 
         });
     }
@@ -46,12 +39,6 @@ class DoctorForm extends Component{
     render(){
         return (
             <div>
-                {this.state.showSpinner ? 
-                    (<Modal show="true">
-                        <Spinner />
-                    </Modal>) :
-                    null
-                }
                 {this.state.showError ? 
                     (<Modal show="true" showContainer="true" modalClosed={() => this.setState({ ...this.state, showError: false })}>
                         <div>You should need atleast one credit to add Doctor!</div>
