@@ -5,15 +5,16 @@ import { connect } from 'react-redux';
 
 import formFields from './formFields';
 import HospitalFormField from './HospitalFormField';
+import * as validations from '../../utils/validations';
 import * as actions from '../../actions';
 
 class HospitalForm extends Component{
     renderField(){
-        return _.map(formFields, ({label, name}) => {
+        return _.map(formFields, ({label, name, type}) => {
             return <Field 
                 key={name}
                 component={HospitalFormField}
-                type="text"
+                type={type}
                 label={label}
                 name={name}
             />
@@ -44,12 +45,14 @@ class HospitalForm extends Component{
 function validate(values){
     const errors = {};
 
+    errors.contact_number = validations.validatePhoneNumber(values.contact_number || '');
+
     _.each(formFields, ({ name }) => {
         if(!values[name]){
             errors[name] = 'You must provide a value';
         }
     });
-
+    console.log("errors ", errors);
     return errors;
 }
 

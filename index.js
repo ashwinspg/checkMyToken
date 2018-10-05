@@ -27,10 +27,14 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.set('view engine', 'pug');
+app.set('views', './views');
+
 require('./routes/authRoutes')(app);
 require('./routes/billingRoutes')(app);
 require('./routes/hospitalRoutes')(app);
 require('./routes/doctorRoutes')(app);
+require('./routes/searchRoutes')(app);
 
 if(process.env.NODE_ENV === 'production'){
     // Express will serve up production assets
