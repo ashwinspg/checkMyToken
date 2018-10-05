@@ -4,40 +4,53 @@ html
         title="checkMyToken"
         link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css')
     body
-        nav
-            div.nav-wrapper.indigo.darken-1
-                a.center.brand-logo checkMyToken
-        div.center-align
-            h5 Hospital detail
+        div.container
+            nav
+                div.nav-wrapper.indigo.darken-1
+                    a.center.brand-logo checkMyToken
+            if(doctor_status)
+                div.row
+                    div.col.s4.offset-s4
+                        div.card.grey.lighten-3.center-align.z-depth-5.indigo-text
+                            div.card-content
+                                span.card-title Token
+                                h1=doctor_token_number
             div
-                table.centered.striped
-                    tbody
-                        tr
-                            th Hospital Name
-                            td=hospital_name
-                        tr
-                            th Hospital Location
-                            td=hospital_location
-                        tr
-                            th Contact Number
-                            td=hospital_contact_number
-        div.center-align
-            h5 Doctor detail
-            div
-                table.centered.striped
-                    tbody
-                        tr
-                            th Doctor Name
-                            td=doctor_name
-                        tr
-                            th Status
-                            if(doctor_status)
-                                td
-                                    span.badge.green.darken-1.white-text Active
-                            else
-                                td
-                                    span.badge.red.lighten-1.white-text Inactive
-                        if(doctor_status)
+                h5.card-panel.indigo.lighten-3 Doctor detail
+                div
+                    table.striped
+                        tbody
                             tr
-                                th Token
-                                td=doctor_token_number
+                                td 
+                                    h6 Doctor Name
+                                td
+                                    h6=doctor_name
+                            tr
+                                td 
+                                    h6 Status
+                                if(doctor_status)
+                                    td
+                                        span.badge.green.darken-1.white-text Active
+                                else
+                                    td
+                                        span.badge.red.lighten-1.white-text Inactive
+            div
+                h5.card-panel.indigo.lighten-3 Hospital detail
+                div
+                    table.striped
+                        tbody
+                            tr
+                                td 
+                                    h6 Hospital Name
+                                td 
+                                    h6=hospital_name
+                            tr
+                                td 
+                                    h6 Hospital Location
+                                td
+                                    h6=hospital_location
+                            tr
+                                td 
+                                    h6 Contact Number
+                                td
+                                    h6=hospital_contact_number
