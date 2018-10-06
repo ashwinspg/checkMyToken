@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import M from 'materialize-css/dist/js/materialize.min.js';
 import Header from './Header';
 import Landing from './Landing';
 import Dashboard from './Dashboard';
@@ -12,17 +11,6 @@ import DoctorStatus from './doctorStatus/DoctorStatus';
 import * as actions from '../actions';
 
 class App extends Component {
-
-    componentWillMount(){
-        document.addEventListener('DOMContentLoaded', function() {
-            M.Sidenav.init(document.querySelectorAll('.sidenav'), {
-                edge: 'right',
-                closeOnClick: true,
-                draggable: true
-            });
-        });
-    }
-
     componentDidMount() {
         this.props.fetchUser();
     }

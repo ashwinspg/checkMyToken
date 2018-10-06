@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import{ Link } from 'react-router-dom';
 
+import M from 'materialize-css/dist/js/materialize.min.js';
 import Payments from './payments/Payments';
 import Aux from './hoc/Aux/Aux';
 import Spinner from './UI/Spinner/Spinner';
@@ -9,6 +10,14 @@ import Modal from './UI/Modal/Modal';
 import * as actions from '../actions'
 
 class Header extends Component {
+    componentDidMount(){
+        M.Sidenav.init(document.querySelectorAll('.sidenav'), {
+            edge: 'right',
+            closeOnClick: true,
+            draggable: true
+        });
+    }
+
     renderContent(){
         switch(this.props.auth.data){
             case null:

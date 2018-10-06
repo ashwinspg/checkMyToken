@@ -54,6 +54,15 @@ export const fetchDoctorStatus = (url) => async dispatch => {
     const res = await axios.get("/api" + url);
     dispatch(hideLoader());
 
+    dispatch(doctorStatusReset());
+    dispatch({ type: actions.FETCH_DOCTOR_STATUS, payload: res.data });
+}
+
+export const updateDoctorStatus = (url, formValues) => async dispatch => {
+    dispatch(showLoader());
+    const res = await axios.post("/api" + url, formValues);
+    dispatch(hideLoader());
+
     dispatch({ type: actions.FETCH_DOCTOR_STATUS, payload: res.data });
 }
 

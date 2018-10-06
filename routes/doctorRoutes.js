@@ -38,4 +38,14 @@ module.exports = app => {
 
         res.send(doctor);
     });
+
+    app.post('/api/hospital/doctors/:doctorId', requireLogin, async (req, res) => {
+        const { status, token_number } = req.body;
+        const doctorId = req.params.doctorId;
+        const doctor = await Doctor.findById(doctorId);
+        doctor.status = status;
+        doctor.token_number = token_number;
+        const doctorStatus = await doctor.save();
+        res.send(doctorStatus);
+    });
 };

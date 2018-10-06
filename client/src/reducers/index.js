@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { reducer as reduxForm } from 'redux-form';
+import { reducer as reduxFormReducer } from 'redux-form';
 
 import headerReducer from './headerReducer';
 import authReducer from './authReducer';
@@ -9,7 +9,7 @@ import doctorStatusReducer from './doctorStatusReducer';
 export default combineReducers({
     header: headerReducer,
     auth: authReducer,
-    form: reduxForm,
+    form: reduxFormReducer,
     doctors: doctorsReducer,
     doctorStatus: doctorStatusReducer
 });
