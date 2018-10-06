@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm, Field, getFormValues } from 'redux-form';
 
 import M from 'materialize-css/dist/js/materialize.min.js';
 import formFields from './formFields';
@@ -30,7 +30,8 @@ class DoctorStatus extends Component {
     submitHandler(formValues){
         formValues.status = formValues.status === "Active" ? true : false;
         formValues.token_number = formValues.status ? formValues.token_number : '-';
-        this.props.updateDoctorStatus(this.props.match.url, formValues);
+        
+        this.props.updateDoctorStatus(this.props.match.url, formValues, this.props.reset);
     }
 
     renderField(){
@@ -53,13 +54,15 @@ class DoctorStatus extends Component {
                         </Field>
                     );
                 default:
+                    if(name === "token_number" && (this.props.doctorStatusFormValues && this.props.doctorStatusFormValues.status !== "Active")){
+                        return;
+                    }
                     return <Field 
                         key={name}
                         component={fieldComponents.textField}
                         type="text"
                         label={label}
                         name={name}
-                        value=""
                     />
             }
         });
@@ -81,11 +84,26 @@ class DoctorStatus extends Component {
                                 readOnly={true}
                                 value={ window.location.origin + "/search/" +this.props.match.params.doctorId } 
                             />
-                            <div className="card-action center">
+                            <div className="center">
                                 <button className="btn blue" onClick={() => this.copyURL()}>
                                     Copy above URL
                                 </button>
                             </div>
+                        </div>
+                    </div>
+                    <div className="card">
+                        <div className="card-content">
+                            <form 
+                                onSubmit = {this.props.handleSubmit((formValues) => {this.submitHandler(formValues)})}
+                            >
+                                {this.renderField()}
+                                <div className="center">
+                                    <button type="submit" className="teal btn-flat white-text">
+                                        Update
+                                        <i className="material-icons right">done</i>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <table>
@@ -114,19 +132,6 @@ class DoctorStatus extends Component {
                             </tr>
                         </tbody>
                     </table>
-                    <div>
-                        <form 
-                            onSubmit = {this.props.handleSubmit((formValues) => {this.submitHandler(formValues)})}
-                        >
-                            {this.renderField()}
-                            <div className="center">
-                                <button type="submit" className="teal btn-flat white-text">
-                                    Update
-                                    <i className="material-icons right">done</i>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
                 </div>
             );
         }
@@ -140,7 +145,7 @@ class DoctorStatus extends Component {
 
 function validate(values){
     const errors = {};
-console.log("val val ",values);
+
     _.each(formFields, ({ name }) => {
         if(!values[name]){
             errors[name] = 'You must provide a value';
@@ -154,9 +159,10 @@ console.log("val val ",values);
     return errors;
 }
 
-function mapStateToProps({ doctorStatus }){
+function mapStateToProps(state){
     return {
-        doctorStatus
+        doctorStatus: state.doctorStatus,
+        doctorStatusFormValues: getFormValues('doctorStatusForm')(state)
     }
 }
 
