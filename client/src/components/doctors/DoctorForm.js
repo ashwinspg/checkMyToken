@@ -26,9 +26,9 @@ class DoctorForm extends Component{
         });
     }
 
-    submitHandler(formValues){
+    async submitHandler(formValues){
         if(this.props.auth.data.credits > 0){
-            return this.props.createDoctor(formValues, this.props.history);
+            return await this.props.createDoctor(formValues, this.props.history);
         }
         this.setState({ 
             ...this.state,
@@ -46,13 +46,13 @@ class DoctorForm extends Component{
                     null
                 }
                 <form 
-                    onSubmit = {this.props.handleSubmit((formValues) => {this.submitHandler(formValues)})}
+                    onSubmit = {this.props.handleSubmit(async (formValues) => {return await this.submitHandler(formValues)})}
                 >
                     {this.renderField()}
                     <Link to="/hospital/doctors" className="red btn-flat white-text">
                         Cancel
                     </Link>
-                    <button type="submit" className="teal btn-flat right white-text">
+                    <button type="submit" className="teal btn-flat right white-text" disabled={ this.props.submitting }>
                         Submit
                         <i className="material-icons right">done</i>
                     </button>

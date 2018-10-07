@@ -68,6 +68,22 @@ class DoctorStatus extends Component {
         });
     }
 
+    renderFormContent(){
+        return (
+            <form 
+                onSubmit = {this.props.handleSubmit((formValues) => {this.submitHandler(formValues)})}
+            >
+                {this.renderField()}
+                <div className="center">
+                    <button type="submit" className="teal btn-flat white-text">
+                        Update
+                        <i className="material-icons right">done</i>
+                    </button>
+                </div>
+            </form>
+        );
+    }
+
     renderContent() {
         if(this.props.doctorStatus.loaded){
             return (
@@ -93,17 +109,7 @@ class DoctorStatus extends Component {
                     </div>
                     <div className="card">
                         <div className="card-content">
-                            <form 
-                                onSubmit = {this.props.handleSubmit((formValues) => {this.submitHandler(formValues)})}
-                            >
-                                {this.renderField()}
-                                <div className="center">
-                                    <button type="submit" className="teal btn-flat white-text">
-                                        Update
-                                        <i className="material-icons right">done</i>
-                                    </button>
-                                </div>
-                            </form>
+                            {this.renderFormContent()}
                         </div>
                     </div>
                     <table>

@@ -21,18 +21,18 @@ class HospitalForm extends Component{
         });
     }
 
-    submitHandler(formValues){
-        this.props.createHospital(formValues, this.props.history);
+    async submitHandler(formValues){
+        return await this.props.createHospital(formValues, this.props.history);
     }
 
     render(){
         return (
             <div>
                 <form 
-                    onSubmit = {this.props.handleSubmit((formValues) => {this.submitHandler(formValues);})}
+                    onSubmit = {this.props.handleSubmit(async (formValues) => {return await this.submitHandler(formValues);})}
                 >
                     {this.renderField()}
-                    <button type="submit" className="teal btn-flat right white-text">
+                    <button type="submit" className="teal btn-flat right white-text" disabled={ this.props.submitting }>
                         Submit
                         <i className="material-icons right">done</i>
                     </button>
@@ -52,7 +52,6 @@ function validate(values){
             errors[name] = 'You must provide a value';
         }
     });
-    console.log("errors ", errors);
     return errors;
 }
 
