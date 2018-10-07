@@ -4,7 +4,7 @@ import { reduxForm, Field } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Modal from '../UI/Modal/Modal';
+import Alert from '../UI/Alert/Alert';
 import formFields from './formFields';
 import DoctorFormField from './DoctorFormField';
 import * as actions from '../../actions';
@@ -40,9 +40,11 @@ class DoctorForm extends Component{
         return (
             <div>
                 {this.state.showError ? 
-                    (<Modal show="true" showContainer="true" modalClosed={() => this.setState({ ...this.state, showError: false })}>
-                        <div>You should need atleast one credit to add Doctor!</div>
-                    </Modal>) :
+                    (
+                        <Alert onAlertClosed={() => this.setState({ ...this.state, showError: false })}>
+                            <h5>You should need atleast one credit to add Doctor!</h5>
+                        </Alert>
+                    ) :
                     null
                 }
                 <form 

@@ -28,10 +28,11 @@ class DoctorStatus extends Component {
     }
 
     async submitHandler(formValues){
-        formValues.status = formValues.status === "Active" ? true : false;
-        formValues.token_number = formValues.status ? formValues.token_number : '-';
+        const updatedFormValues = {};
+        updatedFormValues.status = formValues.status === "Active" ? true : false;
+        updatedFormValues.token_number = formValues.status ? formValues.token_number : '-';
         
-        await this.props.updateDoctorStatus(this.props.match.url, formValues);
+        await this.props.updateDoctorStatus(this.props.match.url, updatedFormValues);
         this.props.reset();
     }
 
@@ -76,7 +77,7 @@ class DoctorStatus extends Component {
             >
                 {this.renderField()}
                 <div className="center">
-                    <button type="submit" className="teal btn-flat white-text">
+                    <button type="submit" className="teal btn-flat white-text" disabled={ this.props.submitting }>
                         Update
                         <i className="material-icons right">done</i>
                     </button>
@@ -86,6 +87,7 @@ class DoctorStatus extends Component {
     }
 
     renderContent() {
+        console.log("sub ",this.props.submitting);
         if(this.props.doctorStatus.loaded){
             return (
                 <div>
@@ -102,7 +104,7 @@ class DoctorStatus extends Component {
                                 value={ window.location.origin + "/search/" +this.props.match.params.doctorId } 
                             />
                             <div className="center">
-                                <button className="btn blue" onClick={() => this.copyURL()} disabled={ this.props.submitting }>
+                                <button className="btn blue" onClick={() => this.copyURL()}>
                                     Copy above URL
                                 </button>
                             </div>
