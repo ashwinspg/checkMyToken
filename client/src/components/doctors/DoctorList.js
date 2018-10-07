@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import * as actions from '../../actions';
+import Aux from '../hoc/Aux/Aux';
 
 class DoctorList extends Component {
     componentDidMount(){
@@ -11,6 +12,16 @@ class DoctorList extends Component {
 
     renderContent(){
         if(this.props.doctors.loaded){
+            if(this.props.doctors.data.length < 1){
+                return (
+                    <Aux>
+                        <div style={{ marginTop: '50px' }} className="center-align">
+                            <h3>No Doctors Found!!!</h3>
+                            <h5>Click <span><i className="material-icons">add</i></span> icon to add doctors</h5>
+                        </div>
+                    </Aux>
+                );
+            }
             return this.props.doctors.data.map(doctor => {
                 return (
                     <Link to={"/hospital/doctors/" + doctor._id} key={doctor._id} className="black-text">

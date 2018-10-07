@@ -61,8 +61,7 @@ export const updateDoctorStatus = (url, formValues, resetCallback) => async disp
     dispatch(showLoader());
     const res = await axios.post("/api" + url, formValues);
     dispatch(hideLoader());
-
-    resetCallback();
+    
     dispatch({ type: actions.FETCH_DOCTOR_STATUS, payload: res.data });
 }
 

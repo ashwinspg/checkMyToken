@@ -27,11 +27,12 @@ class DoctorStatus extends Component {
         document.execCommand("copy");
     }
 
-    submitHandler(formValues){
+    async submitHandler(formValues){
         formValues.status = formValues.status === "Active" ? true : false;
         formValues.token_number = formValues.status ? formValues.token_number : '-';
         
-        this.props.updateDoctorStatus(this.props.match.url, formValues, this.props.reset);
+        await this.props.updateDoctorStatus(this.props.match.url, formValues);
+        this.props.reset();
     }
 
     renderField(){
@@ -71,7 +72,7 @@ class DoctorStatus extends Component {
     renderFormContent(){
         return (
             <form 
-                onSubmit = {this.props.handleSubmit((formValues) => {this.submitHandler(formValues)})}
+                onSubmit = {this.props.handleSubmit(async (formValues) => {return await this.submitHandler(formValues)})}
             >
                 {this.renderField()}
                 <div className="center">
@@ -101,7 +102,7 @@ class DoctorStatus extends Component {
                                 value={ window.location.origin + "/search/" +this.props.match.params.doctorId } 
                             />
                             <div className="center">
-                                <button className="btn blue" onClick={() => this.copyURL()}>
+                                <button className="btn blue" onClick={() => this.copyURL()} disabled={ this.props.submitting }>
                                     Copy above URL
                                 </button>
                             </div>
