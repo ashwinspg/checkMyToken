@@ -5,6 +5,7 @@ import { reduxForm, Field, getFormValues } from 'redux-form';
 
 import M from 'materialize-css/dist/js/materialize.min.js';
 import formFields from './formFields';
+import { showToast } from '../UI/Toast/Toast';
 import * as fieldComponents from './DoctorStatusField';
 import * as actions from '../../actions';
 
@@ -25,6 +26,7 @@ class DoctorStatus extends Component {
         var copyText = document.getElementById("searchURL");
         copyText.select();
         document.execCommand("copy");
+        showToast("URL copied");
     }
 
     async submitHandler(formValues){
@@ -87,7 +89,6 @@ class DoctorStatus extends Component {
     }
 
     renderContent() {
-        console.log("sub ",this.props.submitting);
         if(this.props.doctorStatus.loaded){
             return (
                 <div>

@@ -8,6 +8,7 @@ import Dashboard from './Dashboard';
 import HospitalForm from './hospitals/HospitalForm';
 import DoctorForm from './doctors/DoctorForm';
 import DoctorStatus from './doctorStatus/DoctorStatus';
+import Toast from './UI/Toast/Toast';
 import * as actions from '../actions';
 
 class App extends Component {
@@ -49,6 +50,7 @@ class App extends Component {
                     <div>
                         <Header />
                         { this.routerConfiguration() }
+                        <Toast />
                     </div>
                 </BrowserRouter>
             </div>
