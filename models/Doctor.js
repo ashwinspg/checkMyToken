@@ -5,7 +5,10 @@ const doctorSchema = new Schema({
     name: String,
     status: { type: Boolean, default: false },
     token_number: { type: String, default: '-' },
-    _hospital: { type: Schema.Types.ObjectId, ref: 'Hospital' }
+    _hospital: { 
+        type: Schema.Types.ObjectId, 
+        ref: 'hospitals' 
+    }
 });
 
 mongoose.model('doctors', doctorSchema);

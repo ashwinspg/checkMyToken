@@ -12,7 +12,8 @@ require('./models/Doctor');
 
 require('./services/passport');
 
-mongoose.connect(keys.mongoURI);
+mongoose.connect(keys.mongoURI, { useNewUrlParser: true });
+mongoose.Promise = global.Promise;
 
 const app = express();
 

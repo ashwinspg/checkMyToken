@@ -17,7 +17,7 @@ class App extends Component {
     }
 
     routerConfiguration() {
-        if(this.props.auth.data && !this.props.auth.data.basicInfo){
+        if(this.props.auth.data && !this.props.auth.data._hospital){
             return (
                 <Switch>
                     <Route exact path="/hospital/new" component={HospitalForm} />

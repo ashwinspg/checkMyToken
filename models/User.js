@@ -5,7 +5,10 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
     googleId: String,
     credits: { type: Number, default: 0 },
-    basicInfo: { type: Boolean, default: false }
+    _hospital: { 
+        type: Schema.Types.ObjectId, 
+        ref: 'hospitals' 
+    }
 });
 
 mongoose.model('users', userSchema);

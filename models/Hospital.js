@@ -5,7 +5,10 @@ const hospitalSchema = new Schema({
     name: String,
     location: String,
     contact_number: String,
-    _user: { type: Schema.Types.ObjectId, ref: 'User' }
+    _doctors: [{ 
+        type: Schema.Types.ObjectId, 
+        ref: 'doctors' 
+    }]
 });
 
 mongoose.model('hospitals', hospitalSchema);

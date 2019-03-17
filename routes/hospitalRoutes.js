@@ -12,15 +12,13 @@ module.exports = app => {
         const hospital = new Hospital({
             name,
             location,
-            contact_number,
-            _user: req.user.id
+            contact_number
         });
 
-        req.user.basicInfo = true;
+        req.user._hospital = hospital;
+        
+        await Promise.all([hospital.save(), req.user.save()]);
 
-        await hospital.save();
-        const user = await req.user.save();
-
-        res.send(user);
+        res.send(req.user);
     });
 };

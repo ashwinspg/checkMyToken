@@ -27,7 +27,7 @@ class Header extends Component {
                     <li><a href="/auth/google" onClick={() => this.props.showLoader()}>Login with Google</a></li>
                 );
             default:
-                if(!this.props.auth.data.basicInfo){
+                if(!this.props.auth.data._hospital){
                     return (
                         <li><a href="/api/logout" onClick={() => this.props.showLoader()}>Logout</a></li>
                     );
@@ -58,7 +58,7 @@ class Header extends Component {
                 <nav>
                     <div className="nav-wrapper indigo darken-1">
                         <Link 
-                            to={this.props.auth.data ? (!this.props.auth.data.basicInfo ? '/hospital/new' : '/hospital/doctors') : '/'} 
+                            to={this.props.auth.data ? (!this.props.auth.data._hospital ? '/hospital/new' : '/hospital/doctors') : '/'} 
                             className="left brand-logo"
                         >
                             checkMyToken
