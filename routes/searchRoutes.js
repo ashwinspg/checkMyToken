@@ -1,17 +1,9 @@
-const mongoose = require('mongoose');
-
-const requireLogin = require('../middlewares/requireLogin');
-const requireCredits = require('../middlewares/requireCredits');
-
-const Doctor = mongoose.model('doctors');
-const Hospital = mongoose.model('hospitals');
+const doctorDAO = require('../daos/doctors');
 
 module.exports = app => {
     app.get('/search/:doctorId', async (req, res) => {
-        const doctorId = req.params.doctorId;
         try{
-            const doctor = await Doctor.findById(doctorId)
-                                    .populate('_hospital');
+            const doctor = await doctorDAO.findById(req.user.id, req.params.doctorId);
             res.render('doctor_status', {
                 hospital_name: doctor._hospital.name,
                 hospital_location: doctor._hospital.location,
