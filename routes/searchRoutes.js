@@ -1,9 +1,9 @@
-const doctorDAO = require('../daos/doctors');
+const doctorsDAO = require('../daos/doctors');
 
 module.exports = app => {
     app.get('/search/:doctorId', async (req, res) => {
         try{
-            const doctor = await doctorDAO.findById(req.user.id, req.params.doctorId);
+            const doctor = await doctorsDAO.findById(req.user.id, req.params.doctorId);
             res.render('doctor_status', {
                 hospital_name: doctor._hospital.name,
                 hospital_location: doctor._hospital.location,

@@ -10,7 +10,7 @@ require('./services/passport');
 
 pool.query('SELECT NOW()', (err, res) => {
     if (err != null) {
-        console.log(err)
+        console.error(err)
         process.exit(1)
     }
 
@@ -39,7 +39,7 @@ function init(){
     require('./routes/billingRoutes')(app);
     require('./routes/hospitalRoutes')(app);
     require('./routes/doctorRoutes')(app);
-    // require('./routes/searchRoutes')(app);
+    require('./routes/searchRoutes')(app);
 
     if(process.env.NODE_ENV === 'production'){
         // Express will serve up production assets
