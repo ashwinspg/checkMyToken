@@ -17,9 +17,9 @@ module.exports = app => {
             res.send(req.user);
         } catch (err) {
             console.error("Error performing /api/hospital handler: ", err)
-            res.send({
-                error: err
-            })
+            res.status(500).send({
+                error: err.message
+            });
         }
     });
 };

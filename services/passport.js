@@ -29,12 +29,11 @@ passport.use(
             if(existingUser) {
                 return done(null, existingUser);
             }
-
+            
             const user = await usersDAO.save(new userDTO(profile.id, null));
             return done(null, user);
         } catch(err){
-            console.error("Error performing /auth/google/callback: ", err)
-            return done(err, null)
+            return done("Error performing passport handler: " + err, null)
         }
     })
 );

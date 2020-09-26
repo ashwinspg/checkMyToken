@@ -1,7 +1,9 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE IF NOT EXISTS users(
 	id TEXT PRIMARY KEY,
-	credits INT DEFAULT 0
+	credits INT DEFAULT 0,
+	created_at timestamp without time zone DEFAULT (now() at time zone 'UTC')::timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone DEFAULT (now() at time zone 'UTC')::timestamp without time zone NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS hospitals(
@@ -9,7 +11,9 @@ CREATE TABLE IF NOT EXISTS hospitals(
 	user_id TEXT NOT NULL REFERENCES users(id),
 	name TEXT,
 	location TEXT,
-	contact_number TEXT
+	contact_number TEXT,
+	created_at timestamp without time zone DEFAULT (now() at time zone 'UTC')::timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone DEFAULT (now() at time zone 'UTC')::timestamp without time zone NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS doctors(
@@ -17,5 +21,7 @@ CREATE TABLE IF NOT EXISTS doctors(
 	hospital_id TEXT NOT NULL REFERENCES hospitals(id),
 	name TEXT,
 	status BOOL,
-	token TEXT DEFAULT '-'
+	token_number TEXT DEFAULT '-',
+	created_at timestamp without time zone DEFAULT (now() at time zone 'UTC')::timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone DEFAULT (now() at time zone 'UTC')::timestamp without time zone NOT NULL
 );

@@ -10,8 +10,7 @@ module.exports = {
 
             return res.rows[0]
         } catch (err) {
-            console.error("Error performing save for hospitals table", err)
-            return err
+            throw "Error performing save for hospitals table:" + err
         }
     }
 }

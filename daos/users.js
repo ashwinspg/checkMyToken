@@ -1,6 +1,7 @@
 const pool = require('../db/database');
 const userDTO = require('../dtos/users');
 const hospitalDTO = require('../dtos/hospitals');
+const common = require('../utils/common')
 
 module.exports = {
     findById: async (id) => {
@@ -17,25 +18,26 @@ module.exports = {
             }
 
             user = new userDTO(res.rows[0].id, res.rows[0].credits)
-            user._hospital = new hospitalDTO(res.rows[0].hospital_id, res.rows[0].id, res.rows[0].name, res.rows[0].location, res.rows[0].contact_number)
+            if (!common.isNull(res.rows[0].hospital_id)) {
+                user._hospital = new hospitalDTO(res.rows[0].hospital_id, res.rows[0].id, res.rows[0].name, res.rows[0].location, res.rows[0].contact_number)
+            }
+            
             return user
         } catch (err) {
-            console.error("Error findById for users table: ", err)
-            return err
+            throw "Error findById for users table:" + err
         }
     },
 
     save: async (user) => {
         try {
             const res = await pool.query({
-                text: 'INSERT INTO users (id, credits) VALUES ($1, $2) RETURNING *',
-                values: [user.id, user.credits]
+                text: 'INSERT INTO users (id) VALUES ($1) RETURNING *',
+                values: [user.id]
             })
 
             return res.rows[0]
         } catch (err) {
-            console.error("Error save for users table: ", err)
-            return err
+            throw "Error save for users table:" + err
         }
     },
 
@@ -48,8 +50,7 @@ module.exports = {
 
             return res.rows[0]
         } catch (err) {
-            console.error("Error update credits for users table: ", err)
-            return err
+            throw "Error update credits for users table:" + err
         }
     }
 }
