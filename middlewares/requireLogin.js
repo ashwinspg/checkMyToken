@@ -1,5 +1,7 @@
+const common = require('../utils/common')
+
 module.exports = (req, res, next) => {
-    if(!req.user){
+    if(common.isNull(req.user)){
         return res.status(401).send({ error: 'You must log in!' });
     }
 

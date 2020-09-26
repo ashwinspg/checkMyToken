@@ -1,17 +1,16 @@
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const mongoose = require('mongoose');
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-const keys = require('../config/keys');
-
-const User = mongoose.model('users');
+const config = require('../config/config');
+const userDTO = require('../dtos/users')
+const usersDAO = require('../daos/users')
 
 passport.serializeUser((user, done) => {
     done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-    User.findById(id)
+    usersDAO.findById(id)
         .then(user => {
             done(null, user);
         });
@@ -19,17 +18,22 @@ passport.deserializeUser((id, done) => {
 
 passport.use(
     new GoogleStrategy({
-        clientID: keys.googleClientID,
-        clientSecret: keys.googleClientSecret,
+        clientID: config.googleClientID,
+        clientSecret: config.googleClientSecret,
         callbackURL: '/auth/google/callback',
         proxy: true
     },
     async (accessToken, refreshToken, profile, done) => {
-        const existingUser = await User.findOne({ googleId: profile.id });
-        if(existingUser) {
-            return done(null, existingUser);
+        try {
+            const existingUser = await usersDAO.findById(profile.id);
+            if(existingUser) {
+                return done(null, existingUser);
+            }
+            
+            const user = await usersDAO.save(new userDTO(profile.id, null));
+            return done(null, user);
+        } catch(err){
+            return done("Error performing passport handler: " + err, null)
         }
-        const user = await new User({ googleId: profile.id }).save();
-        done(null, user);
     })
 );

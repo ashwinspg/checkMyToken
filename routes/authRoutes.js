@@ -1,5 +1,7 @@
 const passport = require('passport');
 
+const common = require('../utils/common')
+
 module.exports = app => {
     app.get(
         '/auth/google', 
@@ -12,10 +14,15 @@ module.exports = app => {
         '/auth/google/callback', 
         passport.authenticate('google'),
         (req, res) => {
-            if(!req.user._hospital){
-                res.redirect('/hospital/new');
-            }else{
-                res.redirect('/hospital/doctors');
+            try{
+                if(common.isNull(req.user._hospital)){
+                    res.redirect('/hospital/new');
+                }else{
+                    res.redirect('/hospital/doctors');
+                }
+            } catch (err) {
+                console.error("Error while performing /auth/google/callback route:", err)
+                res.status(500).render('error')
             }
         }
     );
