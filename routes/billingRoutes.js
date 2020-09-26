@@ -20,7 +20,7 @@ module.exports = app => {
             req.user.credits = user.credits
             res.send(req.user);
         } catch (err) {
-            console.error("Error while performing /api/stripe route:", err)
+            console.error("Error performing /api/stripe route:", err)
             res.status(500).send({
                 error: err.message
             });

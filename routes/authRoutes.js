@@ -21,8 +21,10 @@ module.exports = app => {
                     res.redirect('/hospital/doctors');
                 }
             } catch (err) {
-                console.error("Error while performing /auth/google/callback route:", err)
-                res.status(500).render('error')
+                console.error("Error performing /auth/google/callback route:", err)
+                res.status(500).send({
+                    error: err.message
+                });
             }
         }
     );
