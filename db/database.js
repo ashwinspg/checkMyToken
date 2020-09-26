@@ -3,13 +3,8 @@ const {Pool} = require('pg')
 const config = require('../config/config');
 
 const pool = new Pool({
-    // user: config.dbUserName,
-    // password: config.dbPassword,
-    // host: config.dbHost,
-    // port:config.dbPort,
-    // database: config.dbName,
     connectionString: config.databaseURL,
-    max: 20,
+    max: 15,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 2000,
 })
